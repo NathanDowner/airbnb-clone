@@ -2,16 +2,18 @@ import Image from 'next/image';
 
 const Banner = () => {
   return (
-    <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[600px] sxl:h-[700px]">
+    <div className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] xl:h-[80vh]">
       <Image
-        src="https://links.papareact.com/0fm"
+        src="https://a0.muscache.com/im/pictures/e4a2a61c-589f-4e49-b3b8-968a6bc23389.jpg?im_w=1920"
         layout="fill"
         objectFit="cover"
-        className="object-bottom"
+        className="object-left xs:object-left-center md:object-center"
       />
-      <div className="absolute top-1/2 w-full text-center">
-        <p className="text-sm sm:text-lg">Not sure where to go? Perfect</p>
-        <button className="text-purple-500 bg-white px-10 py-4 rounded-full shadow-md mt-3 font-bold hover:shadow-xl active:scale-90 transition">
+      <div className="absolute top-1/3 left-5 md:left-20 lg:left-40">
+        <p className="text-5xl xl:text-6xl font-bold  text-white">
+          Olympian & <br /> Paralympian <br /> Online <br /> Experiences
+        </p>
+        <button className="text-black bg-white px-6 py-2 rounded-xl shadow-md mt-3 font-bold hover:shadow-xl active:scale-90 transition">
           I'm flexible
         </button>
       </div>
