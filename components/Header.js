@@ -7,29 +7,13 @@ import {
 } from '@heroicons/react/solid';
 import { useEffect, useRef, useState } from 'react';
 
-const Header = () => {
-  const headerRef = useRef(null);
-  // const [isVisible, setIsVisible] = useState(false);
-
-  // function callback(entries) {
-  //   const [entry] = entries;
-  //   setIsVisible(entry.isIntersecting);
-  // }
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(callback, {
-  //     root: null,
-  //     rootMargin: '0px',
-  //     threshold: 0,
-  //   });
-  //   return () => {
-  //     if (headerRef.current) observer.unobserve(headerRef.current);
-  //   };
-  // }, [headerRef]);
+const Header = ({ transparent }) => {
+  // const containerStyle = transparent ? 'fixed top-0 z-50 grid grid-cols-3 p-5 md:px-20 lg:px-40 w-full' :
   return (
     <header
-      ref={headerRef}
-      className="fixed top-0 z-50 grid grid-cols-3 p-5 md:px-20 lg:px-40 w-full"
+      className={`fixed top-0 z-50 grid grid-cols-3 p-5 md:px-20 lg:px-40 w-full transition duration-200 ${
+        transparent ? '' : 'bg-white shadow-md'
+      }`}
     >
       {/* Left */}
       <div className="relative flex items-center h-10 cursor-pointer my-auto">
@@ -52,10 +36,14 @@ const Header = () => {
       </div>
 
       {/* Right */}
-      <div className="flex space-x-4 items-center justify-end text-white">
+      <div
+        className={`flex space-x-4 items-center justify-end ${
+          transparent ? 'text-white' : 'text-gray-500'
+        }`}
+      >
         <p className="hidden md:inline cursor-pointer">Become a host</p>
         <GlobeAltIcon className="h-6 cursor-pointer" />
-        <div className="flex items-center space-x-2 border-2 p-2 rounded-full cursor-pointer bg-white text-gray-500">
+        <div className="flex items-center space-x-2 border-2 p-2 rounded-full cursor-pointer bg-white text-gray-500 transition duration-200">
           <MenuIcon className="h-6" />
           <UserCircleIcon className="h-6" />
         </div>

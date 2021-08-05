@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useEffect, useRef, useState } from 'react';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -7,16 +8,38 @@ import MediumCard from '../components/MediumCard';
 import SmallCard from '../components/SmallCard';
 
 export default function Home({ exploreData, cardsData }) {
+  const mainRef = useRef(null);
+  const [makeTransparent, setMakeTransparent] = useState(false);
+
+  function callback(entries) {
+    const [entry] = entries;
+    setMakeTransparent(!entry.isIntersecting);
+  }
+
+  useEffect(() => {
+    console.log(mainRef.current);
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.25,
+    });
+    if (mainRef.current) {
+      observer.observe(mainRef.current);
+    }
+    return () => {
+      if (mainRef.current) observer.unobserve(mainRef.current);
+    };
+  }, [mainRef]);
   return (
     <div className="">
       <Head>
         <title>Let's build</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header transparent={makeTransparent} />
       <Banner />
 
-      <main className="max-w-7xl mx-auto px-8 sm:px-16">
+      <main ref={mainRef} className="max-w-7xl mx-auto px-8 sm:px-16">
         <section>
           <h2 className="text-4xl font-semibold pb-5 pt-6">Explore Nearby</h2>
 
