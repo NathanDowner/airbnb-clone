@@ -21,6 +21,10 @@ const Search = ({ searchResults }) => {
   const formattedEndDate = format(new Date(endDate), 'dd MMMM yy');
   const range = `${formattedStartDate} - ${formattedEndDate}`;
 
+  function replaceLondon(textConainingLondon) {
+    return textConainingLondon.replace('London', location);
+  }
+
   return (
     <div>
       <Head>
@@ -38,7 +42,9 @@ const Search = ({ searchResults }) => {
       <main className="flex">
         <section className="flex-grow pt-14 px-6">
           <p className="text-xs">
-            300+ Stays - {range} - for {numGuests} guest
+            <span className="text-red-400">{searchResults.length}</span> Stays
+            between {range} for{' '}
+            <span className="text-red-400">{numGuests}</span> guest
             {numGuests > 1 ? 's' : ''}
           </p>
           <h1 className="text-3xl font-semibold mt-2 mb-6">
@@ -56,7 +62,12 @@ const Search = ({ searchResults }) => {
           {/* Search Results */}
           <div className="flex flex-col">
             {searchResults.map((result, idx) => (
-              <InforCard key={idx} {...result} />
+              <InforCard
+                key={idx}
+                index={idx}
+                {...result}
+                location={replaceLondon(result.location)}
+              />
             ))}
           </div>
         </section>

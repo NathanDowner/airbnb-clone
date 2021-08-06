@@ -15,9 +15,19 @@ module.exports = {
           '40%': { transform: 'rotate(0deg) ' },
           '60%': { transform: 'translateY(0)' },
         },
+        dropIn: {
+          '0%': {
+            opacity: '0',
+            transform: 'scale(0.6) translateY(-8px)',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
       },
       animation: {
         wiggle: 'wiggle 2s ease-out infinite',
+        dropIn: 'dropIn 350ms ease-in-out',
       },
     },
   },
