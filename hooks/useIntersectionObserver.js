@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from 'react';
 
-function useIntersectionObserver(options) {
-  const elementRef = useRef(null);
+function useIntersectionObserver(elementRef, options) {
   const [isIntersecting, setIsIntersecting] = useState(false);
 
   function callback(entries) {
     const [entry] = entries;
+    console.log(entry.target);
+    console.log(isIntersecting);
     setIsIntersecting(entry.isIntersecting);
   }
 
@@ -20,7 +21,7 @@ function useIntersectionObserver(options) {
     };
   }, [elementRef]);
 
-  return { isIntersecting, elementRef };
+  return { isIntersecting };
 }
 
 export default useIntersectionObserver;

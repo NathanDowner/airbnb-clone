@@ -9,11 +9,11 @@ import SmallCard from '../components/SmallCard';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 export default function Home({ exploreData, cardsData }) {
-  const mainRef = useRef(null);
-  const { isIntersecting, elementRef } = useIntersectionObserver({
+  const mainContainerRef = useRef(null);
+  const { isIntersecting } = useIntersectionObserver(mainContainerRef, {
     root: null,
     rootMargin: '0px',
-    threshold: 0.25,
+    threshold: 0.5,
   });
 
   return (
@@ -25,7 +25,7 @@ export default function Home({ exploreData, cardsData }) {
       <Header transparent={!isIntersecting} dynamic={true} />
       <Banner />
 
-      <main ref={elementRef} className="max-w-7xl mx-auto px-8 sm:px-16">
+      <main ref={mainContainerRef} className="max-w-7xl mx-auto px-8 sm:px-16">
         <section>
           <h2 className="text-4xl font-semibold pb-5 pt-6">Explore Nearby</h2>
 
