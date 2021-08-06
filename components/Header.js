@@ -78,7 +78,7 @@ const Header = ({ transparent, dynamic, placeholder }) => {
         <input
           input={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="px-5 bg-transparent outline-none flex-grow text-xs md:pr-0"
+          className="px-5 bg-transparent outline-none flex-grow text-xs sm:text-lg md:pr-0"
           type="text"
           placeholder={placeholder ?? 'Start your search'}
         />
