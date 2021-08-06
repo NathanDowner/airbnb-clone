@@ -14,7 +14,7 @@ const Banner = () => {
           Olympian & <br /> Paralympian <br /> Online <br /> Experiences
         </p>
         <button className="text-black bg-white px-6 py-2 rounded-xl shadow-md mt-6 font-bold hover:shadow-xl active:scale-90 transition">
-          I'm flexible
+          Explore now
         </button>
       </div>
     </div>
