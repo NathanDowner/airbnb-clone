@@ -10,13 +10,16 @@ import {
   UsersIcon,
 } from '@heroicons/react/solid';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { DateRangePicker } from 'react-date-range';
+import { useRouter } from 'next/dist/client/router';
 
-const Header = ({ transparent }) => {
+const Header = ({ transparent, dynamic, placeholder }) => {
   const [searchInput, setSearchInput] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [numGuests, setNumGuests] = useState(1);
+  const router = useRouter();
 
   const selectionRange = {
     startDate,
@@ -31,14 +34,35 @@ const Header = ({ transparent }) => {
 
   const resetInput = () => setSearchInput('');
 
+  function handleSearch() {
+    router.push({
+      pathname: '/search',
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        numGuests,
+      },
+    });
+  }
+
   return (
     <header
-      className={`fixed top-0 z-50 grid grid-cols-3 p-5 md:px-10 lg:px-40 w-full transition duration-200 ${
-        transparent ? '' : 'bg-white shadow-md'
+      className={`${
+        dynamic ? 'fixed' : 'sticky'
+      } top-0 z-50 grid grid-cols-3 p-5 md:px-10 lg:px-40 w-full transition duration-200 ${
+        dynamic
+          ? transparent
+            ? ''
+            : 'bg-white shadow-md'
+          : 'shadow-md bg-white'
       }`}
     >
       {/* Left */}
-      <div className="relative flex items-center h-10 cursor-pointer my-auto">
+      <div
+        onClick={() => router.replace('/')}
+        className="relative flex items-center h-10 cursor-pointer my-auto"
+      >
         <Image
           src="https://links.papareact.com/qd3"
           layout="fill"
@@ -48,13 +72,13 @@ const Header = ({ transparent }) => {
       </div>
 
       {/* Middle */}
-      <div className="flex items-center md:border-2 md:shadow-sm rounded-full py-2 bg-white">
+      <div className="flex items-center border-2 md:shadow-sm rounded-full py-2 bg-white">
         <input
           input={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="pl-5 bg-transparent outline-none flex-grow"
+          className="pl-5 pr-5 bg-transparent outline-none flex-grow text-xs md:pr-0"
           type="text"
-          placeholder="Start your search"
+          placeholder={placeholder ?? 'Start your search'}
         />
         <SearchIcon className="hidden md:inline-flex md:mx-2 h-8 bg-red-400 text-white rounded-full p-2 cursor-pointer" />
       </div>
@@ -73,15 +97,15 @@ const Header = ({ transparent }) => {
         </div>
       </div>
       {Boolean(searchInput) && (
-        <div className="flex flex-col col-span-3 mx-auto mt-2">
+        <div className="flex flex-col col-span-3 mx-auto mt-2 bg-white rounded-lg pt-2">
           <DateRangePicker
             ranges={[selectionRange]}
             minDate={new Date()}
             rangeColors={['#FD5B61']}
             onChange={handleSelectRange}
           />
-          <div className="flex items-center border-b mb-4">
-            <h2 className="text-2xl font-semibold flex-grow">
+          <div className="flex items-center border-b mb-2">
+            <h2 className="text-2xl font-semibold flex-grow pl-2">
               Number of Guests
             </h2>
             <UsersIcon className="h-5" />
@@ -93,16 +117,28 @@ const Header = ({ transparent }) => {
               onChange={(e) => setNumGuests(e.target.value)}
             />
           </div>
-          <div className="flex">
+          <div className="flex mb-2">
             <button onClick={resetInput} className="flex-grow text-gray-500">
               Cancel
             </button>
-            <button className="flex-grow text-red-400">Search</button>
+            <button onClick={handleSearch} className="flex-grow text-red-400">
+              Search
+            </button>
           </div>
         </div>
       )}
     </header>
   );
+};
+
+Header.propTypes = {
+  transparent: PropTypes.bool,
+  dynamic: PropTypes.bool,
+  placeholder: PropTypes.string,
+};
+
+Header.defaultProps = {
+  dynamic: false,
 };
 
 export default Header;
