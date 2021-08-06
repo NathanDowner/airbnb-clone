@@ -13,7 +13,7 @@ const InforCard = ({
 }) => {
   return (
     <div className="flex py-7 px-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition ease-out rounded-2xl first:border-t">
-      <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0">
+      <div className="relative h-52 w-40 md:w-80 flex-shrink-0">
         <Image
           src={img}
           layout="fill"
@@ -24,7 +24,7 @@ const InforCard = ({
       <div className="flex flex-col flex-grow pl-5">
         <div className="flex justify-between">
           <p className="">{location}</p>
-          <HeartIcon className="h-7 cursor-pointer" />
+          <HeartIcon className="h-7 cursor-pointer hover:animate-wiggle hover:text-red-400 transition duration-200" />
         </div>
         <h4 className="text-xl">{title}</h4>
         <div className="border-b w-10 pt-2" />
