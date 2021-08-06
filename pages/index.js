@@ -19,7 +19,7 @@ export default function Home({ exploreData, cardsData }) {
   return (
     <div className="">
       <Head>
-        <title>Let's build</title>
+        <title>Airbnb Clone | Landing</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header transparent={!isIntersecting} dynamic={true} />

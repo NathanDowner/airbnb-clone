@@ -28,7 +28,7 @@ const Search = ({ searchResults }) => {
   return (
     <div>
       <Head>
-        <title>Search</title>
+        <title>Airbnb Clone | Search</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
