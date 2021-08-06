@@ -4,4 +4,12 @@
   .button {
     @apply px-4 py-2 border rounded-full cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transition duration-100 ease-out;
   }
+
+  .nav-item-hover {
+    @apply hover:bg-gray-100 rounded-full p-2;
+  }
+
+  .menu-item {
+    @apply text-gray-500 px-4 py-3 cursor-pointer hover:bg-gray-100 hover:first:rounded-t-xl hover:last:rounded-b-xl;
+  }
 }

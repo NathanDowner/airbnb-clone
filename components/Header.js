@@ -1,7 +1,8 @@
+import Image from 'next/image';
+
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
-import Image from 'next/image';
 import {
   SearchIcon,
   GlobeAltIcon,
@@ -13,6 +14,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { DateRangePicker } from 'react-date-range';
 import { useRouter } from 'next/dist/client/router';
+import AuthMenu from './AuthMenu';
 
 const Header = ({ transparent, dynamic, placeholder }) => {
   const [searchInput, setSearchInput] = useState('');
@@ -76,7 +78,7 @@ const Header = ({ transparent, dynamic, placeholder }) => {
         <input
           input={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="pl-5 pr-5 bg-transparent outline-none flex-grow text-xs md:pr-0"
+          className="px-5 bg-transparent outline-none flex-grow text-xs md:pr-0"
           type="text"
           placeholder={placeholder ?? 'Start your search'}
         />
@@ -89,12 +91,11 @@ const Header = ({ transparent, dynamic, placeholder }) => {
           transparent ? 'text-white' : 'text-gray-500'
         }`}
       >
-        <p className="hidden md:inline cursor-pointer ml-2">Become a host</p>
+        <p className="hidden md:inline cursor-pointer ml-2 nav-item-hover ">
+          Become a host
+        </p>
         <GlobeAltIcon className="h-6 cursor-pointer" />
-        <div className="flex items-center space-x-2 border-2 p-2 rounded-full cursor-pointer bg-white text-gray-500 transition duration-200">
-          <MenuIcon className="h-6" />
-          <UserCircleIcon className="h-6" />
-        </div>
+        <AuthMenu />
       </div>
       {Boolean(searchInput) && (
         <div className="flex flex-col col-span-3 mx-auto mt-2 bg-white rounded-lg pt-2">
