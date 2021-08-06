@@ -12,7 +12,7 @@ const AuthMenu = () => {
       </Menu.Button>
       <Menu.Items
         as="div"
-        className="absolute w-52 bg-white right-0 mt-2 rounded-xl my-2"
+        className="absolute w-52 bg-white right-0 mt-2 rounded-xl my-2 shadow-2xl"
       >
         <Menu.Item as="div" className="menu-item">
           Sign up
