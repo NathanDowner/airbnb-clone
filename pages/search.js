@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { format } from 'date-fns';
 import InforCard from '../components/InfoCard';
+import Map from '../components/Map';
 
 const filters = [
   { label: 'Cancellation Flexibility' },
@@ -19,7 +20,6 @@ const Search = ({ searchResults }) => {
 
   const formattedStartDate = format(new Date(startDate), 'dd MMMM yy');
   const formattedEndDate = format(new Date(endDate), 'dd MMMM yy');
-  const range = `${formattedStartDate} - ${formattedEndDate}`;
 
   function replaceLondon(textConainingLondon) {
     return textConainingLondon.replace('London', location);
@@ -34,26 +34,32 @@ const Search = ({ searchResults }) => {
 
       <Header
         dynamic={false}
-        placeholder={`${location} | ${range} | ${numGuests} guest${
+        placeholder={`${location} | ${formattedStartDate} - ${formattedEndDate} | ${numGuests} guest${
           numGuests > 1 ? 's' : ''
         }`}
       />
 
-      <main className="flex">
-        <section className="flex-grow pt-14 px-6">
+      <main className="flex flex-col-reverse xl:flex-row">
+        <section className="flex-grow pt-14 px-6 max-w-5xl">
           <p className="text-xs">
-            <span className="text-red-400">{searchResults.length}</span> Stays
-            between {range} for{' '}
-            <span className="text-red-400">{numGuests}</span> guest
+            <span className="text-red-400">{searchResults.length}</span> stays -{' '}
+            <span className="inline-block p-1 rounded-lg bg-red-400 text-white cursor-pointer">
+              {formattedStartDate}
+            </span>{' '}
+            -{' '}
+            <span className="inline-block p-1 rounded-lg bg-red-400 text-white cursor-pointer">
+              {formattedEndDate}
+            </span>{' '}
+            for <span className="text-red-400">{numGuests}</span> guest
             {numGuests > 1 ? 's' : ''}
           </p>
           <h1 className="text-3xl font-semibold mt-2 mb-6">
             Stays in {location}
           </h1>
 
-          <div className="hidden lg:flex space-x-3 whitespace-nowrap">
+          <div className="hidden lg:flex space-x-3 whitespace-nowrap pb-6">
             {filters.map((filter) => (
-              <p key={filter} className="button">
+              <p key={filter.label} className="button">
                 {filter.label}
               </p>
             ))}
@@ -69,6 +75,12 @@ const Search = ({ searchResults }) => {
                 location={replaceLondon(result.location)}
               />
             ))}
+          </div>
+        </section>
+
+        <section className=" relative hidden xl:block flex-grow xl:min-w-[600px]">
+          <div className="sticky top-0 pt-[92px] mt-[-92px] h-[100vh] w-full">
+            <Map searchResults={searchResults} />
           </div>
         </section>
       </main>
