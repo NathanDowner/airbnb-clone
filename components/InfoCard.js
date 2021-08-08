@@ -14,7 +14,7 @@ const InforCard = ({
 }) => {
   return (
     <div
-      className="flex py-7 px-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition ease-out rounded-2xl first:border-t animate-dropIn"
+      className="flex py-7 px-2 mb-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition ease-out rounded-2xl first:border-t animate-dropIn"
       style={{ '--order': index, animationDelay: 'calc(var(--order) * 100ms)' }}
     >
       <div className="relative h-52 w-40 md:w-80 flex-shrink-0">
