@@ -6,14 +6,28 @@ import { format } from 'date-fns';
 import InfoCard from '../components/InfoCard';
 import Map from '../components/Map';
 import { useState } from 'react';
+import {
+  CurrencyPoundIcon,
+  ExclamationCircleIcon,
+  InformationCircleIcon,
+  StarIcon,
+  SortAscendingIcon,
+  SortDescendingIcon,
+} from '@heroicons/react/solid';
 
 const filters = [
-  { label: 'Cancellation Flexibility' },
-  { label: 'Types of Places' },
-  { label: 'Price' },
-  { label: 'Rooms and Beds' },
-  { label: 'More Filters' },
+  { label: 'Cancellation Flexibility', icon: <ExclamationCircleIcon /> },
+  { label: 'Rating', sortKey: 'rating', icon: <StarIcon /> },
+  { label: 'Price', sortKey: 'price', icon: <CurrencyPoundIcon /> },
+  { label: 'Rooms and Beds', icon: <StarIcon /> },
+  { label: 'More Filters', icon: <InformationCircleIcon /> },
 ];
+
+const sortState = {
+  Off: 0,
+  Ascending: 1,
+  Descending: 2,
+};
 
 const Search = ({ searchResults }) => {
   const router = useRouter();
@@ -23,6 +37,15 @@ const Search = ({ searchResults }) => {
   const formattedEndDate = format(new Date(endDate), 'dd MMMM yy');
 
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [sorts, setSorts] = useState({
+    rating: sortState.Off,
+    price: sortState.Off,
+  });
+
+  function handleSort(sortKey) {
+    console.log(sortKey);
+    setSorts((prev) => ({ ...prev, [sortKey]: (prev[sortKey] + 1) % 3 }));
+  }
 
   function replaceLondon(textConainingLondon) {
     return textConainingLondon.replace('London', location);
@@ -66,9 +89,24 @@ const Search = ({ searchResults }) => {
 
           <div className="hidden lg:flex space-x-3 whitespace-nowrap pb-6">
             {filters.map((filter) => (
-              <p key={filter.label} className="button">
-                {filter.label}
-              </p>
+              <div
+                onClick={() => handleSort(filter.sortKey)}
+                className="button flex"
+              >
+                <span className="h-6 w-6 text-red-400">{filter.icon}</span>
+                <p className="mx-1" key={filter.label}>
+                  {filter.label}
+                </p>
+                {/* {sorts[filter.sortKey] !== sortState.Off && (
+                  <span className="h-6 w-6 text-red-400">
+                    {sorts[filter.sortKey] === sortState.Ascending ? (
+                      <SortAscendingIcon />
+                    ) : (
+                      <SortDescendingIcon />
+                    )}
+                  </span>
+                )} */}
+              </div>
             ))}
           </div>
 
