@@ -43,7 +43,7 @@ const Map = ({ searchResults, selectedLocation, onSelectLocation }) => {
       mapboxApiAccessToken={process.env.mapbox_key}
       onViewportChange={(viewport) => setViewport(viewport)}
       {...viewport}
-      transitionDuration={500}
+      transitionDuration={1000}
       transitionInterpolator={new FlyToInterpolator()}
       className="map-popup"
     >
@@ -56,14 +56,14 @@ const Map = ({ searchResults, selectedLocation, onSelectLocation }) => {
               aria-label="push-pin"
               role="img"
             >
-              📌
+              🏠
             </p>
           </Marker>
           {/* Pop up for clicking on marker */}
           {Boolean(selectedLocation) &&
           selectedLocation.long === result.long ? (
             <Popup
-              onClose={() => setSelectedLocation(null)}
+              onClose={() => handleSelection(null)}
               closeOnClick={true}
               latitude={result.lat}
               longitude={result.long}
