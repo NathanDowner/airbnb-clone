@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { format } from 'date-fns';
-import InforCard from '../components/InfoCard';
+import InfoCard from '../components/InfoCard';
 import Map from '../components/Map';
 import { useState } from 'react';
 
@@ -75,10 +75,10 @@ const Search = ({ searchResults }) => {
           {/* Search Results */}
           <div className="flex flex-col">
             {searchResults.map((result, idx) => (
-              <InforCard
+              <InfoCard
                 key={idx}
                 index={idx}
-                isSelected={selectedLocation.title === result.title}
+                isSelected={selectedLocation?.title === result.title}
                 result={{ ...result, location: replaceLondon(result.location) }}
                 onClick={handleCardSelection}
               />

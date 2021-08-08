@@ -2,7 +2,7 @@ import { HeartIcon } from '@heroicons/react/outline';
 import { StarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 
-const InforCard = ({ index, result, onClick, isSelected }) => {
+const InfoCard = ({ index, result, onClick, isSelected }) => {
   const { img, location, title, description, star, price, total } = result;
 
   function handleClick() {
@@ -51,4 +51,4 @@ const InforCard = ({ index, result, onClick, isSelected }) => {
   );
 };
 
-export default InforCard;
+export default InfoCard;
