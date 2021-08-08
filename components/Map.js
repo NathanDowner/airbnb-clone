@@ -7,8 +7,8 @@ import { getCenter } from 'geolib';
 
 const mapStyleUrl = 'mapbox://styles/nathandowner/cks0u66ro2sea17pdpony3oy7';
 
-const Map = ({ searchResults }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+const Map = ({ searchResults, selectedLocation, onSelectLocation }) => {
+  // const [selectedLocation, setSelectedLocation] = useState(null);
   const coords = searchResults.map(({ lat, long }) => ({
     latitude: lat,
     longitude: long,
@@ -23,14 +23,19 @@ const Map = ({ searchResults }) => {
     zoom: 12,
   });
 
-  // useEffect(() => {
-  //   setSelectedLocation((prev) => ({
-  //     ...prev,
-  //     latitude: selectedLocation.lat,
-  //     longitude: selectedLocation.long,
-  //   }));
+  useEffect(() => {
+    if (selectedLocation) {
+      setViewport((prev) => ({
+        ...prev,
+        latitude: selectedLocation.lat,
+        longitude: selectedLocation.long,
+      }));
+    }
+  }, [selectedLocation]);
 
-  // }, [selectedLocation]);
+  function handleSelection(selection) {
+    onSelectLocation(selection);
+  }
 
   return (
     <ReactMapGL
@@ -46,11 +51,7 @@ const Map = ({ searchResults }) => {
         <div key={result.long}>
           <Marker longitude={result.long} latitude={result.lat} offsetTop={-20}>
             <p
-              onMouseEnter={() => setSelectedLocation(result)}
-              onMouseLeave={() => {
-                () => setSelectedLocation(null);
-              }}
-              onClick={() => setSelectedLocation(result)}
+              onClick={() => handleSelection(result)}
               className="cursor-pointer text-2xl"
               aria-label="push-pin"
               role="img"

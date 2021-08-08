@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { format } from 'date-fns';
 import InforCard from '../components/InfoCard';
 import Map from '../components/Map';
+import { useState } from 'react';
 
 const filters = [
   { label: 'Cancellation Flexibility' },
@@ -21,8 +22,14 @@ const Search = ({ searchResults }) => {
   const formattedStartDate = format(new Date(startDate), 'dd MMMM yy');
   const formattedEndDate = format(new Date(endDate), 'dd MMMM yy');
 
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
   function replaceLondon(textConainingLondon) {
     return textConainingLondon.replace('London', location);
+  }
+
+  function handleCardSelection(selection) {
+    setSelectedLocation(selection);
   }
 
   return (
@@ -71,8 +78,8 @@ const Search = ({ searchResults }) => {
               <InforCard
                 key={idx}
                 index={idx}
-                {...result}
-                location={replaceLondon(result.location)}
+                result={{ ...result, location: replaceLondon(result.location) }}
+                onClick={handleCardSelection}
               />
             ))}
           </div>
@@ -80,7 +87,11 @@ const Search = ({ searchResults }) => {
 
         <section className=" relative hidden xl:block flex-grow xl:min-w-[600px]">
           <div className="sticky top-0 pt-[92px] mt-[-92px] h-[100vh] w-full">
-            <Map searchResults={searchResults} />
+            <Map
+              searchResults={searchResults}
+              selectedLocation={selectedLocation}
+              onSelectLocation={handleCardSelection}
+            />
           </div>
         </section>
       </main>
