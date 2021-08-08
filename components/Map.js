@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import { useEffect, useState } from 'react';
+import { StarIcon } from '@heroicons/react/solid';
+import Image from 'next/image';
+
+import ReactMapGL, { FlyToInterpolator, Marker, Popup } from 'react-map-gl';
 import { getCenter } from 'geolib';
 
 const mapStyleUrl = 'mapbox://styles/nathandowner/cks0u66ro2sea17pdpony3oy7';
@@ -16,9 +19,18 @@ const Map = ({ searchResults }) => {
     width: '100%',
     height: '100%',
     latitude: center.latitude,
-    longitude: center.longidude,
-    zoom: 11,
+    longitude: center.longitude,
+    zoom: 12,
   });
+
+  // useEffect(() => {
+  //   setSelectedLocation((prev) => ({
+  //     ...prev,
+  //     latitude: selectedLocation.lat,
+  //     longitude: selectedLocation.long,
+  //   }));
+
+  // }, [selectedLocation]);
 
   return (
     <ReactMapGL
@@ -26,6 +38,9 @@ const Map = ({ searchResults }) => {
       mapboxApiAccessToken={process.env.mapbox_key}
       onViewportChange={(viewport) => setViewport(viewport)}
       {...viewport}
+      transitionDuration={500}
+      transitionInterpolator={new FlyToInterpolator()}
+      className="map-popup"
     >
       {searchResults.map((result) => (
         <div key={result.long}>
@@ -44,14 +59,42 @@ const Map = ({ searchResults }) => {
             </p>
           </Marker>
           {/* Pop up for clicking on marker */}
-          {selectedLocation && selectedLocation.long === result.long ? (
+          {Boolean(selectedLocation) &&
+          selectedLocation.long === result.long ? (
             <Popup
               onClose={() => setSelectedLocation(null)}
               closeOnClick={true}
               latitude={result.lat}
               longitude={result.long}
+              anchor="top"
+              className="map-popup"
             >
-              {result.title}
+              <div className="z-40  flex flex-col relative top-4 rounded-2xl bg-white max-w-[300px]">
+                <div className="relative flex-grow h-28 ">
+                  <Image
+                    src={selectedLocation.img}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-t-2xl"
+                  />
+                </div>
+                <div className="p-2">
+                  <h1>{selectedLocation.title}</h1>
+                  <div className="border-b w-10 pt-2" p-0 />
+                  <p className="text-sm text-gray-500">
+                    {selectedLocation.description}
+                  </p>
+                  <div className="flex justify-between">
+                    <p className="flex items-center">
+                      <StarIcon className="h-5 text-red-400" />
+                      {selectedLocation.star}
+                    </p>
+                    <div className="text-lg font-semibold">
+                      {selectedLocation.price}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </Popup>
           ) : null}
         </div>

@@ -1,0 +1,9 @@
+.map-popup,
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.mapboxgl-popup-tip {
+  display: none !important;
+}
