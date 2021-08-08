@@ -24,10 +24,15 @@ module.exports = {
             opacity: '1',
           },
         },
+        breathe: {
+          '0%, 100%': { transform: 'scale(0.990)' },
+          '50%': { transform: 'scale(1)' },
+        },
       },
       animation: {
         wiggle: 'wiggle 2s ease-out infinite',
         dropIn: 'dropIn 350ms ease-in-out',
+        breathe: 'breathe 2s ease-in-out infinite',
       },
     },
   },
