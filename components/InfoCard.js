@@ -2,16 +2,19 @@ import { HeartIcon } from '@heroicons/react/outline';
 import { StarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 
-const InforCard = ({ index, result, onClick }) => {
+const InforCard = ({ index, result, onClick, isSelected }) => {
   const { img, location, title, description, star, price, total } = result;
 
   function handleClick() {
     onClick(result);
   }
+
   return (
     <div
       onClick={handleClick}
-      className="flex py-7 px-2 mb-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition ease-out rounded-2xl first:border-t animate-dropIn"
+      className={`flex py-7 px-2 mb-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition ease-out rounded-2xl first:border-t animate-dropIn ${
+        isSelected ? 'bg-red-100 animate-breathe' : ''
+      }`}
       style={{ '--order': index, animationDelay: 'calc(var(--order) * 100ms)' }}
     >
       <div className="relative h-52 w-40 md:w-80 flex-shrink-0">

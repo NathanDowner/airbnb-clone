@@ -78,6 +78,7 @@ const Search = ({ searchResults }) => {
               <InforCard
                 key={idx}
                 index={idx}
+                isSelected={selectedLocation.title === result.title}
                 result={{ ...result, location: replaceLondon(result.location) }}
                 onClick={handleCardSelection}
               />
